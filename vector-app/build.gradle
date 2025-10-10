@@ -143,7 +143,7 @@ android {
     compileSdk versions.compileSdk
 
     defaultConfig {
-        applicationId "im.vector.app"
+        applicationId "com.optimizemyday.messenger"
         // Set to API 21: see #405
         minSdk versions.minSdk
         targetSdk versions.targetSdk
@@ -241,6 +241,12 @@ android {
             storeFile file(project.property("signing.element.storePath"))
             storePassword project.property("signing.element.storePassword")
         }
+        omd {
+            keyAlias System.env.OMD_ANDROID_KEYID ?: project.hasProperty("signing.omd.keyId") ? project.property("signing.omd.keyId") : "omddebugkey"
+            keyPassword System.env.OMD_ANDROID_KEYPASSWORD ?: project.hasProperty("signing.omd.keyPassword") ? project.property("signing.omd.keyPassword") : "android"
+            storeFile file(System.env.OMD_ANDROID_KEYSTORE ?: project.hasProperty("signing.omd.storePath") ? project.property("signing.omd.storePath") : './signature/omd.keystore')
+            storePassword System.env.OMD_ANDROID_STOREPASSWORD ?: project.hasProperty("signing.omd.storePassword") ? project.property("signing.omd.storePassword") : "android"
+        }
     }
 
     buildTypes {
@@ -298,6 +304,32 @@ android {
                 // "App Distribution halted because it had a problem uploading the APK: [404] Requested entity was not found."
                 appId = "${getFirebaseAppId()}"
             }
+        }
+
+        omd {
+            initWith release
+            // Override the complete application ID by setting namespace
+            versionNameSuffix "-omd"
+            resValue "string", "app_name", "OMD Messenger"
+            // Use dedicated OMD signing configuration for production
+            signingConfig signingConfigs.omd
+            matchingFallbacks = ['release']
+            
+            postprocessing {
+                removeUnusedCode true
+                removeUnusedResources true
+                obfuscate true
+                optimizeCode true
+                proguardFiles 'proguard-rules.pro'
+            }
+        }
+
+        omdDebug {
+            initWith debug
+            // Override the complete application ID by setting namespace
+            applicationIdSuffix ".debug"
+            resValue "string", "app_name", "OMD Messenger - dbg"
+            matchingFallbacks = ['debug']
         }
     }
 

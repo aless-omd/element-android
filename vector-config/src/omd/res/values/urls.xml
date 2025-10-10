@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- This file contains OMD-specific url values-->
+
+    <string name="threads_learn_more_url" translatable="false">https://docs.optimizemyday.ai/help#threads</string>
+    <string name="ftue_ems_url">https://optimizemyday.ai/messaging-services</string>
+</resources>
