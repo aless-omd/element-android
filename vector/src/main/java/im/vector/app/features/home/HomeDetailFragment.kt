@@ -145,22 +145,23 @@ class HomeDetailFragment :
             }
         }
 
-        unknownDeviceDetectorSharedViewModel.onEach { state ->
-            state.unknownSessions.invoke()?.let { unknownDevices ->
-                if (unknownDevices.firstOrNull()?.currentSessionTrust == true) {
-                    val uid = PopupAlertManager.REVIEW_LOGIN_UID
-                    alertManager.cancelAlert(uid)
-                    val olderUnverified = unknownDevices.filter { !it.isNew }
-                    val newest = unknownDevices.firstOrNull { it.isNew }?.deviceInfo
-                    if (newest != null) {
-                        promptForNewUnknownDevices(uid, state, newest)
-                    } else if (olderUnverified.isNotEmpty()) {
-                        // In this case we prompt to go to settings to review logins
-                        promptToReviewChanges(uid, state, olderUnverified.map { it.deviceInfo })
-                    }
-                }
-            }
-        }
+        // OMD: Disabled device verification popup as E2EE is not supported on our homeserver
+        // unknownDeviceDetectorSharedViewModel.onEach { state ->
+        //     state.unknownSessions.invoke()?.let { unknownDevices ->
+        //         if (unknownDevices.firstOrNull()?.currentSessionTrust == true) {
+        //             val uid = PopupAlertManager.REVIEW_LOGIN_UID
+        //             alertManager.cancelAlert(uid)
+        //             val olderUnverified = unknownDevices.filter { !it.isNew }
+        //             val newest = unknownDevices.firstOrNull { it.isNew }?.deviceInfo
+        //             if (newest != null) {
+        //                 promptForNewUnknownDevices(uid, state, newest)
+        //             } else if (olderUnverified.isNotEmpty()) {
+        //                 // In this case we prompt to go to settings to review logins
+        //                 promptToReviewChanges(uid, state, olderUnverified.map { it.deviceInfo })
+        //             }
+        //         }
+        //     }
+        // }
 
         unreadMessagesSharedViewModel.onEach { state ->
             views.drawerUnreadCounterBadgeView.render(
