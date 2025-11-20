@@ -316,10 +316,10 @@ android {
             matchingFallbacks = ['release']
             
             postprocessing {
-                removeUnusedCode true
-                removeUnusedResources true
-                obfuscate true
-                optimizeCode true
+                removeUnusedCode false
+                removeUnusedResources false
+                obfuscate false
+                optimizeCode false
                 proguardFiles 'proguard-rules.pro'
             }
         }

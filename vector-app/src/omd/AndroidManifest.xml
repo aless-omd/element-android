@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:name="com.optimizemyday.messenger.VectorApplication"
-        tools:replace="android:name">
+        android:name="im.vector.app.VectorApplication">
 
         <!-- Override SSO redirect activity for OMD scheme -->
         <activity
