@@ -375,6 +375,11 @@ class HomeActivityViewModel @AssistedInject constructor(
         if (hasCheckedBootstrap) return
         hasCheckedBootstrap = true
 
+        // Skip cross-signing verification
+        Timber.d("Skipping cross-signing verification")
+        
+        // Original code commented out to skip verification
+        /*
         // We do not use the viewModel context because we do not want to tie this action to activity view model
         activeSessionHolder.getSafeActiveSession()?.coroutineScope?.launch(Dispatchers.IO) {
             val session = activeSessionHolder.getSafeActiveSession() ?: return@launch Unit.also {
@@ -501,6 +506,7 @@ class HomeActivityViewModel @AssistedInject constructor(
                 }
             }
         }
+        */
     }
 
     override fun handle(action: HomeActivityViewActions) {
