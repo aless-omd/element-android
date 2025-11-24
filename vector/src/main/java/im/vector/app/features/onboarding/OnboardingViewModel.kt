@@ -236,6 +236,7 @@ class OnboardingViewModel @AssistedInject constructor(
     }
 
     private fun continueToPageAfterSplash(onboardingFlow: OnboardingFlow) {
+        // OMD: Always use the configured homeserver, skip server selection entirely
         when (onboardingFlow) {
             OnboardingFlow.SignUp -> {
                 _viewEvents.post(
